@@ -1,0 +1,44 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 20px 20px;
+  zoom: 1.1;
+}
+
+.header {
+  flex-shrink: 0;
+  margin-bottom: 16px;
+}
+
+.backBtn {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--c-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.backBtn:hover { color: var(--c-sepia); }
+
+.title {
+  font-family: 'Lora', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--c-ink);
+  margin-bottom: 4px;
+}
+
+.chatArea {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}

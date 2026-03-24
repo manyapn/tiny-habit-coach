@@ -1,0 +1,47 @@
+.card {
+  border: 1px solid var(--c-dust);
+  border-radius: 6px;
+  background: #fdf9f4;
+  padding: 20px 22px;
+  margin: 20px 0;
+}
+
+.label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin-bottom: 10px;
+}
+
+.intention {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--c-ink);
+  margin: 0;
+}
+
+.divider {
+  height: 1px;
+  background: var(--c-border);
+  margin: 14px 0;
+}
+
+.twoMinute {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--c-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.stack {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--c-muted);
+  margin: 6px 0 0;
+}

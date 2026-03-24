@@ -1,0 +1,116 @@
+/*
+  globals.css — Design system for Tiny
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --c-ink:    #2a1f14;  /* Primary text, logo, YES button background */
+  --c-paper:  #f2ede6;  /* App background — aged paper, never pure white */
+  --c-warm:   #f5efe6;  /* AI chat bubble, card surfaces */
+  --c-sepia:  #8c6d4f;  /* Streak dots, active states, accent highlights */
+  --c-dust:   #c4b49e;  /* Borders, dividers, card edges */
+  --c-muted:  #a89880;  /* Secondary text, timestamps, metadata */
+  --c-border: #e8e0d5;  /* Input borders, section dividers */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base */
+html, body, #root {
+  height: 100%;
+}
+
+
+body {
+  background-color: var(--c-paper);
+  color: var(--c-ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*  Typography Utilities  */
+.font-serif  { font-family: 'Lora', Georgia, serif; }
+.font-mono   { font-family: 'DM Mono', 'Courier New', monospace; }
+
+.text-label  { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--c-muted); }
+.text-meta   { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--c-muted); }
+.text-body   { font-family: 'Lora', serif; font-size: 15px; }
+.text-lead   { font-family: 'Lora', serif; font-size: 18px; }
+.text-head   { font-family: 'Lora', serif; font-size: 24px; font-weight: 400; }
+.text-display{ font-family: 'Lora', serif; font-size: 52px; font-weight: 400; }
+
+/*  Layout  */
+.app-shell {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  min-height: 100vh;
+}
+
+/*  Buttons  */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--c-ink);
+  color: var(--c-paper);
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 12px 28px;
+  border-radius: 4px;
+  transition: opacity 0.15s;
+}
+
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--c-ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 12px 28px;
+  border: 1px solid var(--c-dust);
+  border-radius: 4px;
+  transition: border-color 0.15s, opacity 0.15s;
+}
+
+.btn-ghost:hover { opacity: 0.7; }
+
+/*  Inputs  */
+input[type="text"], textarea {
+  width: 100%;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--c-ink);
+  background: var(--c-warm);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  resize: none;
+}
+
+input[type="text"]:focus, textarea:focus {
+  border-color: var(--c-dust);
+}
+
+/*  Divider  */
+.divider {
+  height: 1px;
+  background: var(--c-border);
+  margin: 16px 0;
+}

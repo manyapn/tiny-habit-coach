@@ -1,0 +1,65 @@
+@keyframes dotPop {
+  0%   { transform: scale(1.0); }
+  50%  { transform: scale(1.3); }
+  100% { transform: scale(1.0); }
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 12px 0 28px;
+}
+
+.monthNav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.monthLabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  min-width: 140px;
+  text-align: center;
+}
+
+.navBtn {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--c-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  transition: color 0.15s;
+}
+
+.navBtn:hover:not(:disabled) { color: var(--c-ink); }
+.navBtn:disabled { opacity: 0.25; cursor: default; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 22px);
+  grid-template-rows: repeat(5, 22px);
+  gap: 6px;
+  align-content: start;
+}
+
+.dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+}
+
+.done    { background: var(--c-sepia); }
+.today   { background: transparent; border: 1.5px solid var(--c-sepia); }
+.missed  { background: var(--c-border); }
+.future  { background: #f0ebe3; }
+
+.animate { animation: dotPop 300ms ease forwards; }

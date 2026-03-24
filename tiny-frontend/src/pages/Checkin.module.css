@@ -1,0 +1,73 @@
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  zoom: 1.1;
+}
+
+.back {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--c-muted);
+  margin-bottom: 32px;
+  padding: 0;
+  text-align: left;
+}
+
+.back:hover { color: var(--c-ink); }
+
+/* ─── Question phase ─────────────────────────────────────────────── */
+
+.questionPhase {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.habitQuestion {
+  font-family: 'Lora', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--c-ink);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.habitMeta {
+  margin-bottom: 40px;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+
+/* ─── Chat phase ─────────────────────────────────────────────────── */
+
+.chatPhase {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Done phase ─────────────────────────────────────────────────── */
+
+.donePhase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 8px;
+}
+
+.doneText {
+  font-family: 'Lora', serif;
+  font-size: 36px;
+  color: var(--c-ink);
+}

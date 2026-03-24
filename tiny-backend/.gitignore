@@ -1,0 +1,6 @@
+.env
+db/tiny.db
+__pycache__/
+*.pyc
+.venv/
+venv/
