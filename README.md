@@ -1,6 +1,6 @@
 # Tiny Habit Coach
 
-An AI-powered habit coach based on the frameworks from *Atomic Habits* by James Clear. You track one habit at a time. The AI helps you design it, checks in when you miss a day, and reviews your progress weekly.
+An AI-powered habit coach based on the frameworks from *Atomic Habits* by James Clear. You track one habit at a time. The AI helps you design it, checks in when you miss a day, and reviews your progress weekly. Try it now here: https://tiny-habit-coach.vercel.app/
 
 ## What it does
 
