@@ -6,31 +6,40 @@ Database schema for Tiny Habit Coach.
   - redesigns: Every time the AI suggests a habit change and the user accepts, we save the old vs new version here. This lets us track how many times the habit was redesigned and compare versions over time.
 """
 
-import sqlite3
 import os
+import psycopg2
+import psycopg2.extras
 
-DB_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'db', 'tiny.db')
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
 
 def get_db():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row  # rows behave like dicts: row['column_name']
+    """Return a database connection. Each request gets its own connection."""
+    conn = psycopg2.connect(DATABASE_URL)
     return conn
 
 
-def init_db():
-    conn = get_db()
-    cursor = conn.cursor()
+def get_cursor(conn):
+    """Return a RealDictCursor so rows behave like dicts: row['column_name']"""
+    return conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-    cursor.executescript("""
+
+def init_db():
+    """Create all tables if they don't already exist. Safe to call on every startup."""
+    conn = get_db()
+    cursor = get_cursor(conn)
+
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
           id TEXT PRIMARY KEY,
           name TEXT,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
 
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS habits (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          id SERIAL PRIMARY KEY,
           user_id TEXT NOT NULL,
           action TEXT NOT NULL,
           time TEXT NOT NULL,
@@ -38,30 +47,35 @@ def init_db():
           two_minute TEXT NOT NULL,
           why TEXT,
           habit_stack TEXT,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
 
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS checkins (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          id SERIAL PRIMARY KEY,
           user_id TEXT NOT NULL,
           habit_id INTEGER NOT NULL,
           date TEXT NOT NULL,
           completed INTEGER NOT NULL,
           friction_note TEXT,
           redesigned INTEGER DEFAULT 0,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
 
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS redesigns (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          id SERIAL PRIMARY KEY,
           habit_id INTEGER NOT NULL,
           trigger_reason TEXT,
           old_action TEXT, new_action TEXT,
           new_time TEXT, new_location TEXT, new_two_minute TEXT,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
     """)
 
     conn.commit()
+    cursor.close()
     conn.close()
