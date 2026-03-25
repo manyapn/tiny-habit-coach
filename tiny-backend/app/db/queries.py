@@ -106,7 +106,7 @@ def log_checkin(user_id, habit_id, date, completed, friction_note=None, redesign
     return dict(row)
 
 
-def get_checkins(user_id: str, limit: int):
+def get_checkins(user_id: str, limit: int = 30):
     """Return the last N check-ins for a user, most recent first."""
     conn = get_db()
     cursor = get_cursor(conn)
