@@ -2,9 +2,9 @@
   Checkin.jsx — daily check-in flow
 
   STATE MACHINE:
-    'question'  → show the habit question + YES / NOT TODAY buttons
-    'chat'      → missed-day AI conversation
-    'done'      → completed, redirect to /home after brief delay
+    'question' → show the habit question + YES / NOT TODAY buttons
+    'chat' → missed-day AI conversation
+    'done' → completed, redirect to /home after brief delay
 
   THE YES PATH:
     1. POST /checkins with completed=1
@@ -12,11 +12,10 @@
 
   THE NOT TODAY PATH:
     1. POST /checkins with completed=0
-    2. Go straight to chat — no separate friction screen
-    3. AI opens the conversation and asks what got in the way
-    4. Monitor AI messages for {"redesign": true/false} JSON
-    5. If redesign=true: PUT /habits/:id with new fields, POST /redesigns
-    6. Navigate back to /home
+    2. AI opens the conversation and asks what got in the way
+    3. Monitor AI messages for {"redesign": true/false} JSON
+    4. If redesign=true: PUT /habits/:id with new fields, POST /redesigns
+    5. Navigate back to /home
 */
 
 import { useState, useRef } from 'react'
@@ -35,7 +34,7 @@ export default function Checkin() {
   const { habit } = useHabit(userId)
   const { checkins, logCheckin } = useCheckins(userId)
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = new Date().toLocaleDateString('en-CA')
   const alreadyCheckedIn = checkins.some(c => c.date === today)
 
   const [phase, setPhase] = useState('question') // 'question' | 'chat' | 'done'

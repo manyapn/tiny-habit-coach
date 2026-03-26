@@ -1,15 +1,6 @@
 /*
   Weekly.jsx — weekly AI review (available after 7+ days)
 
-  THIS PAGE:
-    Loads the user's stats + habit + this week's check-ins, builds a
-    context object, and starts a conversation with the weekly review prompt.
-
-  THE CONTEXT OBJECT:
-    This is crucial — the spec dedicates a whole section to it (Section 7.4).
-    The weekly prompt receives real data and uses it to give advice that's
-    specific to this user at this moment.
-
     context = {
       habit: { action, time, location, why },
       checkins_summary: "Mon: ✓, Tue: ✓, Wed: ✗, Thu: ✓, Fri: ✗, Sat: ✓, Sun: ✓",
@@ -28,7 +19,7 @@
     Same Chat component used in Onboarding and Checkin.
     The AI opens the conversation with a data-driven weekly observation.
     The user can respond and have a multi-turn conversation.
-    No done:JSON detection needed here — this is open-ended conversation.
+    No done:JSON detection needed here 
 */
 
 import { useState, useEffect, useRef } from 'react'
@@ -78,7 +69,7 @@ export default function Weekly() {
     if (!habit || !stats || !checkins.length || initialized.current) return
     initialized.current = true
     sendWeeklyMessage([])
-  }, [habit, stats, checkins])
+  }, [habit, stats, checkins, sendWeeklyMessage])
 
   function buildContext() {
     return {
@@ -96,6 +87,7 @@ export default function Weekly() {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   async function sendWeeklyMessage(msgs) {
     setIsLoading(true)
     try {

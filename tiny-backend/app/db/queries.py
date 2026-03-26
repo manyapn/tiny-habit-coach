@@ -121,8 +121,12 @@ def get_checkins(user_id: str, limit: int = 30):
     return [dict(r) for r in rows]
 
 
-def get_streak(user_id: str) -> int:
-    """Count consecutive completed days ending today (or yesterday)."""
+def get_streak(user_id: str, today: str = None) -> int:
+    """Count consecutive completed days ending today (or yesterday).
+
+    today: YYYY-MM-DD string in the user's local timezone. Falls back to
+    the server's UTC date if not provided.
+    """
     from datetime import date, timedelta
     conn = get_db()
     cursor = get_cursor(conn)
@@ -139,7 +143,7 @@ def get_streak(user_id: str) -> int:
         return 0
 
     checkin_map = {r['date']: r['completed'] for r in rows}
-    today = date.today().isoformat()
+    today = today or date.today().isoformat()
 
     cursor_date = date.today() if today in checkin_map else date.today() - timedelta(days=1)
 

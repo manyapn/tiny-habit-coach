@@ -21,9 +21,10 @@ export function useCheckins(userId) {
     if (!userId) return
     setLoading(true)
     try {
+      const today = new Date().toLocaleDateString('en-CA')
       const [checkinsRes, streakRes] = await Promise.all([
         api.get(`/checkins/${userId}`),
-        api.get(`/checkins/${userId}/streak`),
+        api.get(`/checkins/${userId}/streak`, { params: { today } }),
       ])
       setCheckins(checkinsRes.data)
       setStreak(streakRes.data.streak)
@@ -37,7 +38,7 @@ export function useCheckins(userId) {
   useEffect(() => { fetchCheckins() }, [fetchCheckins])
 
   const logCheckin = async (habitId, completed, frictionNote = null) => {
-    const today = new Date().toISOString().split('T')[0]
+    const today = new Date().toLocaleDateString('en-CA')
     const res = await api.post('/checkins', {
       user_id: userId,
       habit_id: habitId,

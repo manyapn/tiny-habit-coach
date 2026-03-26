@@ -50,7 +50,8 @@ def get_user_checkins(user_id):
 # get streak
 @bp.route('/checkins/<user_id>/streak', methods=['GET'])
 def get_user_streak(user_id):
-    streak = get_streak(user_id)
+    today = request.args.get('today')  # YYYY-MM-DD in user's local timezone
+    streak = get_streak(user_id, today=today)
     return jsonify({'streak': streak})
 
 # redesign habit

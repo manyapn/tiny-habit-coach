@@ -1,5 +1,5 @@
 /*
-  TypingDots — three-dot "AI is thinking" animation
+  TypingDots: three-dot "AI is thinking" animation
 */
 
 import styles from './TypingDots.module.css'

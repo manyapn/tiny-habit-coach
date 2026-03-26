@@ -20,7 +20,7 @@ export function useUserId() {
     setUserId(id)
     // Register with backend 
     api.post('/users', { id }).catch(() => {
-      // Non-critical: app works even if this fails
+     // non critical 
     })
   }, [])
 
