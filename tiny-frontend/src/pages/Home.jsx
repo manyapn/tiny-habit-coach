@@ -53,8 +53,8 @@ export default function Home() {
     navigate('/')
   }
 
-  const today = new Date().toISOString().split('T')[0]
-  const checkedInToday = checkins.some(c => c.date === today)
+  const today = new Date().toLocaleDateString('en-CA')
+  const checkedInToday = checkins.some(c => c.date === today && c.completed === 1)
   const canSeeWeekly = stats?.days_since_start >= 7
 
   if (habitLoading || checkinsLoading) {
