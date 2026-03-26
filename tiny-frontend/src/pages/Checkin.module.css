@@ -2,10 +2,9 @@
   max-width: 560px;
   margin: 0 auto;
   padding: 24px 20px 40px;
-  min-height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
-  zoom: 1.1;
 }
 
 .back {

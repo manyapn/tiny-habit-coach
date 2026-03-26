@@ -131,14 +131,14 @@ export default function Checkin() {
     try {
       const parsed = JSON.parse(text.trim())
       if ('redesign' in parsed) return { data: parsed, preamble: '' }
-    } catch {}
+    } catch { /* empty */ }
     // Handle reply where JSON is appended after text
     const match = text.match(/([\s\S]*?)(\{[\s\S]*?"redesign"[\s\S]*?\})\s*$/)
     if (match) {
       try {
         const parsed = JSON.parse(match[2])
         if ('redesign' in parsed) return { data: parsed, preamble: match[1].trim() }
-      } catch {}
+      } catch { /* empty */ }
     }
     return null
   }
