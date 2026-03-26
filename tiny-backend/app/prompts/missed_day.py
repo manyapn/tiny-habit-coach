@@ -69,4 +69,11 @@ When the conversation reaches a conclusion, output ONLY this JSON:
 Redesign: {{"redesign":true,"new_action":"","new_time":"",
            "new_location":"","new_two_minute":""}}
 No redesign: {{"redesign":false}}
+
+IMPORTANT — new_action vs new_two_minute are TWO DIFFERENT THINGS:
+  new_action     = the full habit goal (e.g. "floss all teeth")
+  new_two_minute = the tiny starter version used to build the habit (e.g. "floss one tooth")
+  new_two_minute must always be smaller/easier than new_action.
+  If only shrinking the habit, set new_action to the original action and new_two_minute to the smaller version.
+  Never put the two-minute version in new_action.
 '''

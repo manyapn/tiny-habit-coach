@@ -35,7 +35,7 @@ export default function Checkin() {
   const { checkins, logCheckin } = useCheckins(userId)
 
   const today = new Date().toLocaleDateString('en-CA')
-  const alreadyCheckedIn = checkins.some(c => c.date === today && c.completed === 1)
+  const alreadyCheckedIn = checkins.some(c => c.date === today)
 
   const [phase, setPhase] = useState('question') // 'question' | 'chat' | 'done'
   const [chatMessages, setChatMessages] = useState([])
@@ -170,7 +170,7 @@ export default function Checkin() {
   }
 
   if (!habit) return null
-  if (alreadyCheckedIn) {
+  if (alreadyCheckedIn && phase === 'question') {
     navigate('/home')
     return null
   }
