@@ -1,26 +1,5 @@
 """
 Onboarding prompt — app/prompts/onboarding.py
-
-PURPOSE:
-  Guide the user through a conversation that ends with a complete
-  Implementation Intention — the structured habit commitment from Atomic Habits.
-
-THE OUTPUT CONTRACT:
-  When the AI has collected all fields, it outputs ONLY a single JSON line.
-  The frontend detects this JSON, parses it, and saves it to the backend.
-  This is a "structured output" pattern: natural language conversation
-  until we hit a clear extraction signal (the done:true flag).
-
-WHY NOT JUST USE A FORM?
-  The spec argues that a conversation produces better habit design.
-  The AI can catch vague habits ("be healthier"), habits that are too big
-  ("exercise 2 hours"), and surface the WHY — which a form cannot do.
-
-PROMPT DESIGN DECISIONS:
-  - "exactly ONE question per message" — prevents overwhelming the user
-  - "You never explain the science" — avoids the AI sounding like a textbook
-  - The few-shot examples (TONE EXAMPLES) lock in tone better than instructions
-  - The conversation SEQUENCE gives the AI a step-by-step path to follow
 """
 
 from .shared_context import ATOMIC_HABITS_CORE
