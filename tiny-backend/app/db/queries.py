@@ -143,9 +143,10 @@ def get_streak(user_id: str, today: str = None) -> int:
         return 0
 
     checkin_map = {r['date']: r['completed'] for r in rows}
-    today = today or date.today().isoformat()
+    today_str = today or date.today().isoformat()
+    today_date = date.fromisoformat(today_str)
 
-    cursor_date = date.today() if today in checkin_map else date.today() - timedelta(days=1)
+    cursor_date = today_date if today_str in checkin_map else today_date - timedelta(days=1)
 
     streak = 0
     while True:
