@@ -60,8 +60,8 @@ export default function Checkin() {
 
   async function handleNotToday() {
     if (!habit) return
-    await logCheckin(habit.id, false)
     setPhase('chat')
+    logCheckin(habit.id, false)
     if (!initialized.current) {
       initialized.current = true
       await sendMissedDayMessage([])
