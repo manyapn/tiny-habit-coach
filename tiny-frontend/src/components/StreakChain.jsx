@@ -61,7 +61,7 @@ export default function StreakChain({ checkins, habitCreatedAt, newlyCompleted }
           <div
             key={date}
             className={`${styles.dot} ${styles[state]} ${date === newlyCompleted ? styles.animate : ''}`}
-            title={`${viewDate.toLocaleDateString('en-US', { month: 'short' })} ${day} — ${state}`}
+            title={`${viewDate.toLocaleDateString('en-US', { month: 'short' })} ${day}: ${state}`}
           />
         ))}
       </div>
