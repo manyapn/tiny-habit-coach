@@ -1,18 +1,5 @@
 """
 Shared context — app/prompts/shared_context.py
-
-WHY A SHARED CONTEXT?
-  All three AI prompts (onboarding, missed_day, weekly) need the same
-  foundational Atomic Habits knowledge. Putting it in one place means:
-  - No drift: updating here updates all prompts
-  - No duplication: the same quotes don't need to appear three times
-  - Clarity: onboarding.py, missed_day.py, weekly.py only add what's unique to them
-
-THE CORE INSIGHT ABOUT PROMPT ENGINEERING:
-  An LLM without injected source material will give generic habit advice.
-  An LLM that receives the actual quotes, formulas, and frameworks from the
-  book will reason from those frameworks — not from its general training.
-  This is the difference between "great goal!" and "what is the two-minute version?"
 """
 
 ATOMIC_HABITS_CORE = '''

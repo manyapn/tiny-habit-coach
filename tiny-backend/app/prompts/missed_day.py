@@ -1,27 +1,5 @@
 """
 Missed Day prompt — app/prompts/missed_day.py
-
-PURPOSE:
-  Coach the user after they tap "NOT TODAY". The goal is never guilt —
-  it's diagnosis and, if needed, redesign.
-
-WHY A FUNCTION NOT A STRING?
-  Unlike onboarding (which is always the same), this prompt is personalized.
-  It receives actual user data at call time: their habit details, consecutive
-  misses, and their friction note (why they said not today).
-  A function lets us inject that data using Python f-strings.
-
-THE DECISION FRAMEWORK:
-  One miss + external reason = Never Miss Twice (no redesign needed)
-  Two+ misses OR design problem = redesign the habit
-
-THE OUTPUT CONTRACT:
-  Two possible JSON outcomes:
-  - {"redesign": false} — just needed encouragement
-  - {"redesign": true, "new_action": ..., ...} — habit needs updating
-
-  The frontend detects this, calls PUT /habits/:id with new values,
-  and saves a record to POST /redesigns for the audit trail.
 """
 
 from .shared_context import ATOMIC_HABITS_CORE

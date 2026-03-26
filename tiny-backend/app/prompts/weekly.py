@@ -1,24 +1,5 @@
 """
 Weekly review prompt — app/prompts/weekly.py
-
-PURPOSE:
-  A structured weekly reflection conversation triggered after 7+ days.
-  The AI receives real data (completion rate, specific missed days, streak,
-  total days) and uses it to give advice that's specific to THIS user NOW.
-
-THE GOLDILOCKS FRAMEWORK (applied here):
-  7/7 completion -> suggest increasing difficulty slightly
-  5-6/7 -> perfect zone, reinforce and ask about the missed days
-  3-4/7 -> design problem, reduce friction
-  <3/7  -> habit is too hard, apply Two-Minute Rule
-
-IDENTITY LANGUAGE PROGRESSION:
-  The spec has a beautiful idea here: the coach's language shifts over time.
-  Early (< 14 days): "Did you meditate today?" — habit language
-  Mid  (14-66 days): "You are becoming someone who meditates" — identity language
-  Late (66+ days):   "You are a person who meditates. This is who you are now."
-  This maps directly to Chapter 2 of Atomic Habits (identity-based habits).
-  The prompt uses days_total to decide which register to speak in.
 """
 
 from .shared_context import ATOMIC_HABITS_CORE

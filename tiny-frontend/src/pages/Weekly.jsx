@@ -40,7 +40,7 @@ function buildCheckinsSummary(checkins) {
   for (let i = 6; i >= 0; i--) {
     const d = new Date(today)
     d.setDate(d.getDate() - i)
-    const dateStr = d.toISOString().split('T')[0]
+    const dateStr = d.toLocaleDateString('en-CA')
     const dayName = DAY_NAMES[d.getDay()]
     const found = checkins.find(c => c.date === dateStr)
     const symbol = found ? (found.completed === 1 ? '✓' : '✗') : '–'

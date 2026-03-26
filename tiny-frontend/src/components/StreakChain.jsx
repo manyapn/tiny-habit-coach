@@ -11,7 +11,7 @@ function sameMonth(a, b) {
 
 export default function StreakChain({ checkins, habitCreatedAt, newlyCompleted }) {
   const today = new Date()
-  const todayStr = today.toISOString().split('T')[0]
+  const todayStr = today.toLocaleDateString('en-CA')
   const habitStart = new Date(habitCreatedAt)
 
   const [viewDate, setViewDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1))
