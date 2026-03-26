@@ -81,9 +81,22 @@ export default function Checkin() {
         context,
       })
       const reply = res.data.reply
+      const redesign = extractRedesign(reply)
 
-      if (isRedesignJSON(reply)) {
-        await handleRedesignResponse(reply)
+      if (redesign) {
+        if (redesign.preamble) {
+          const parts = parseAIResponse(redesign.preamble)
+          for (let i = 0; i < parts.length; i++) {
+            if (i > 0) await new Promise(r => setTimeout(r, 400))
+            const part = parts[i]
+            setChatMessages(prev => [
+              ...prev,
+              { role: 'assistant', type: part.type, title: part.title, content: part.content, createdAt: new Date() }
+            ])
+          }
+          await new Promise(r => setTimeout(r, 600))
+        }
+        await handleRedesignResponse(redesign.data)
         return
       }
 
@@ -113,17 +126,24 @@ export default function Checkin() {
     sendMissedDayMessage(newMsgs)
   }
 
-  function isRedesignJSON(text) {
+  function extractRedesign(text) {
+    // Handle reply that is purely JSON
     try {
       const parsed = JSON.parse(text.trim())
-      return 'redesign' in parsed
-    } catch {
-      return false
+      if ('redesign' in parsed) return { data: parsed, preamble: '' }
+    } catch {}
+    // Handle reply where JSON is appended after text
+    const match = text.match(/([\s\S]*?)(\{[\s\S]*?"redesign"[\s\S]*?\})\s*$/)
+    if (match) {
+      try {
+        const parsed = JSON.parse(match[2])
+        if ('redesign' in parsed) return { data: parsed, preamble: match[1].trim() }
+      } catch {}
     }
+    return null
   }
 
-  async function handleRedesignResponse(text) {
-    const data = JSON.parse(text.trim())
+  async function handleRedesignResponse(data) {
     if (data.redesign && habit) {
       const updatedFields = {}
       if (data.new_action)     updatedFields.action = data.new_action
