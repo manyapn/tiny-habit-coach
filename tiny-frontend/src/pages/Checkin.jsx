@@ -35,7 +35,7 @@ export default function Checkin() {
   const { checkins, logCheckin } = useCheckins(userId)
 
   const today = new Date().toLocaleDateString('en-CA')
-  const alreadyCheckedIn = checkins.some(c => c.date === today)
+  const alreadyCheckedIn = checkins.some(c => c.date === today && c.completed === 1)
 
   const [phase, setPhase] = useState('question') // 'question' | 'chat' | 'done'
   const [chatMessages, setChatMessages] = useState([])
