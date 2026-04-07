@@ -60,6 +60,6 @@
 .done    { background: var(--c-sepia); }
 .today   { background: transparent; border: 1.5px solid var(--c-sepia); }
 .missed  { background: var(--c-border); }
-.future  { background: #c8c8c8; }
+.future  { background: #ddd8d0; }
 
 .animate { animation: dotPop 300ms ease forwards; }
