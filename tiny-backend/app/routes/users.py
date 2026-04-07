@@ -5,11 +5,13 @@ Users route: POST /users
 from flask import Blueprint, request, jsonify
 from ..db.queries import upsert_user, save_user_name
 from ..db.schema import get_db
+from ..auth import require_auth
 
 bp = Blueprint('users', __name__)
 
-# create a user if not already using app (user history saved in localStorage)
+# create a user if not already using app
 @bp.route('/users', methods=['POST'])
+@require_auth
 def create_user():
     data = request.json
     user_id = data.get('id')
@@ -20,6 +22,7 @@ def create_user():
 
 # save user's name
 @bp.route('/users/<user_id>/name', methods=['PUT'])
+@require_auth
 def update_name(user_id):
     name = request.json.get('name', '').strip()
     if not name:
@@ -29,6 +32,7 @@ def update_name(user_id):
 
 # delete user history
 @bp.route('/users/<user_id>/reset', methods=['DELETE'])
+@require_auth
 def reset_user(user_id):
     """Delete all data for a user. The frontend will clear localStorage and restart."""
     conn = get_db()

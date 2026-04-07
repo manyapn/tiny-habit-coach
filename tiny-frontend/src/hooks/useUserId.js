@@ -1,27 +1,29 @@
 /*
-  useUserId: generate/persist a UUID in localStorage
+  useUserId: returns the current Supabase auth user's ID.
+  Returns null while session is loading or user is not signed in.
 */
 
 import { useState, useEffect } from 'react'
+import { supabase } from '../api/supabase'
 import api from '../api/client'
-
-const USER_ID_KEY = 'tiny_user_id'
 
 export function useUserId() {
   const [userId, setUserId] = useState(null)
 
   useEffect(() => {
-    let id = localStorage.getItem(USER_ID_KEY)
-    if (!id) {
-      id = crypto.randomUUID()
-      localStorage.setItem(USER_ID_KEY, id)
-    }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setUserId(id)
-    // Register with backend 
-    api.post('/users', { id }).catch(() => {
-     // non critical 
+    supabase.auth.getSession().then(({ data }) => {
+      const id = data.session?.user?.id ?? null
+      setUserId(id)
+      if (id) {
+        api.post('/users', { id }).catch(() => {})
+      }
     })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserId(session?.user?.id ?? null)
+    })
+
+    return () => subscription.unsubscribe()
   }, [])
 
   return userId

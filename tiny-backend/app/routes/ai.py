@@ -4,6 +4,7 @@ AI Proxy route — POST /ai/chat
 
 from flask import Blueprint, request, jsonify
 import anthropic
+from ..auth import require_auth
 from ..prompts.onboarding import ONBOARDING_PROMPT
 from ..prompts.missed_day import build_missed_day_prompt
 from ..prompts.weekly import build_weekly_prompt
@@ -19,6 +20,7 @@ PROMPT_MAP = {
 
 
 @bp.route('/ai/chat', methods=['POST'])
+@require_auth
 def ai_chat():
     data = request.json
     key = data.get('system_prompt_key', 'onboarding')

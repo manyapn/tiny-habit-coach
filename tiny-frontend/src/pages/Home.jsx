@@ -21,9 +21,8 @@ import { useCheckins } from '../hooks/useCheckins'
 import IntentionCard from '../components/IntentionCard'
 import StreakChain from '../components/StreakChain'
 import api from '../api/client'
+import { supabase } from '../api/supabase'
 import styles from './Home.module.css'
-
-const USER_ID_KEY = 'tiny_user_id'
 
 export default function Home() {
   const userId = useUserId()
@@ -49,8 +48,7 @@ export default function Home() {
   async function handleReset() {
     if (!userId) return
     await api.delete(`/users/${userId}/reset`).catch(() => {})
-    localStorage.removeItem(USER_ID_KEY)
-    navigate('/')
+    await supabase.auth.signOut()
   }
 
   const today = new Date().toLocaleDateString('en-CA')

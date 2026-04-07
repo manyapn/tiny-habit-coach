@@ -19,11 +19,13 @@ DATE FORMAT: ISO 8601 string "YYYY-MM-DD"
 
 from flask import Blueprint, request, jsonify
 from ..db.queries import log_checkin, get_checkins, get_streak, save_redesign
+from ..auth import require_auth
 
 bp = Blueprint('checkins', __name__)
 
 # log check in
 @bp.route('/checkins', methods=['POST'])
+@require_auth
 def post_checkin():
     d = request.json
     required = ['user_id', 'habit_id', 'date', 'completed']
@@ -43,12 +45,14 @@ def post_checkin():
 
 # get check in
 @bp.route('/checkins/<user_id>', methods=['GET'])
+@require_auth
 def get_user_checkins(user_id):
     checkins = get_checkins(user_id)
     return jsonify(checkins)
 
 # get streak
 @bp.route('/checkins/<user_id>/streak', methods=['GET'])
+@require_auth
 def get_user_streak(user_id):
     today = request.args.get('today')  # YYYY-MM-DD in user's local timezone
     streak = get_streak(user_id, today=today)
@@ -56,6 +60,7 @@ def get_user_streak(user_id):
 
 # redesign habit
 @bp.route('/redesigns', methods=['POST'])
+@require_auth
 def post_redesign():
     d = request.json
     save_redesign(

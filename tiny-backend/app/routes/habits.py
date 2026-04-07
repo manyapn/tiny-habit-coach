@@ -8,11 +8,13 @@ and the user agrees. Only the fields that changed are sent.
 
 from flask import Blueprint, request, jsonify
 from ..db.queries import create_habit, get_habit_by_user, update_habit
+from ..auth import require_auth
 
 bp = Blueprint('habits', __name__)
 
 # create habit
 @bp.route('/habits', methods=['POST'])
+@require_auth
 def post_habit():
     d = request.json
     required = ['user_id', 'action', 'time', 'location', 'two_minute']
@@ -33,6 +35,7 @@ def post_habit():
 
 # get habit
 @bp.route('/habits/<user_id>', methods=['GET'])
+@require_auth
 def get_habit(user_id):
     habit = get_habit_by_user(user_id)
     if not habit:
@@ -41,6 +44,7 @@ def get_habit(user_id):
 
 # update habit
 @bp.route('/habits/<int:habit_id>', methods=['PUT'])
+@require_auth
 def put_habit(habit_id):
     """Update specific fields on a habit. Body contains only the changed fields."""
     data = request.json

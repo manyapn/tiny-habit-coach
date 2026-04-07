@@ -1,14 +1,34 @@
 /*
-  App.jsx — React Router 
+  App.jsx — React Router with Supabase auth gate
 */
 
+import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { supabase } from './api/supabase'
 import Onboarding from './pages/Onboarding'
 import Home from './pages/Home'
 import Checkin from './pages/Checkin'
 import Weekly from './pages/Weekly'
+import Login from './pages/Login'
 
 export default function App() {
+  const [session, setSession] = useState(undefined) // undefined = loading
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session ?? null)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  if (session === undefined) return null // loading
+  if (!session) return <Login />
+
   return (
     <BrowserRouter>
       <Routes>

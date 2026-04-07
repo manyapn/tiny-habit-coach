@@ -8,11 +8,13 @@ Returns aggregated data used by:
 
 from flask import Blueprint, jsonify
 from ..db.queries import get_stats
+from ..auth import require_auth
 
 bp = Blueprint('stats', __name__)
 
 # get stats
 @bp.route('/stats/<user_id>', methods=['GET'])
+@require_auth
 def user_stats(user_id):
     stats = get_stats(user_id)
     return jsonify(stats)
