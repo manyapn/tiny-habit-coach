@@ -204,14 +204,20 @@ def get_stats(user_id: str) -> dict:
         created = datetime.fromisoformat(created)
     days_since_start = (datetime.utcnow() - created).days + 1
 
+    today = datetime.utcnow().date()
+    month_start = today.replace(day=1)
+    # Don't count days before the habit existed
+    rate_start = max(month_start, created.date() if hasattr(created, 'date') else created)
+    days_in_range = (today - rate_start).days + 1
+
     cursor.execute(
-        "SELECT completed FROM checkins WHERE user_id = %s ORDER BY date DESC LIMIT 30",
-        (user_id,)
+        """SELECT completed FROM checkins WHERE user_id = %s
+           AND date >= %s AND date <= %s""",
+        (user_id, rate_start.isoformat(), today.isoformat())
     )
     rows = cursor.fetchall()
-    total = len(rows)
     completed_count = sum(1 for r in rows if r['completed'] == 1)
-    completion_rate = completed_count / total if total > 0 else 0
+    completion_rate = completed_count / days_in_range if days_in_range > 0 else 0
 
     cursor.execute(
         "SELECT id FROM habits WHERE user_id = %s ORDER BY created_at DESC LIMIT 1",
