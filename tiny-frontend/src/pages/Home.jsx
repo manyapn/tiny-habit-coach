@@ -138,6 +138,9 @@ export default function Home() {
             start over
           </button>
         )}
+        <button className={styles.resetLink} onClick={() => supabase.auth.signOut()}>
+          sign out
+        </button>
       </div>
     </div>
   )
