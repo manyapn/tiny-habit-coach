@@ -43,7 +43,7 @@ export default function Home() {
   useEffect(() => {
     if (!userId) return
     api.get(`/stats/${userId}`).then(res => setStats(res.data)).catch(() => {})
-  }, [userId])
+  }, [userId, checkins])
 
   async function handleReset() {
     if (!userId) return
