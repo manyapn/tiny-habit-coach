@@ -217,7 +217,8 @@ def get_stats(user_id: str) -> dict:
     )
     rows = cursor.fetchall()
     completed_count = sum(1 for r in rows if r['completed'] == 1)
-    completion_rate = completed_count / days_in_range if days_in_range > 0 else 0
+    checked_in_count = len(rows)
+    completion_rate = completed_count / checked_in_count if checked_in_count > 0 else 0
 
     cursor.execute(
         "SELECT id FROM habits WHERE user_id = %s ORDER BY created_at DESC LIMIT 1",
