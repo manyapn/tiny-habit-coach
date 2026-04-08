@@ -59,7 +59,7 @@
 
 .done    { background: var(--c-sepia); }
 .today   { background: transparent; border: 1.5px solid var(--c-sepia); }
-.missed  { background: var(--c-border); }
-.future  { background: #ddd8d0; }
+.missed  { background: #ddd8d0; }
+.future  { background: var(--c-border); }
 
 .animate { animation: dotPop 300ms ease forwards; }
