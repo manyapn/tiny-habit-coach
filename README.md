@@ -76,7 +76,7 @@ VITE_API_URL=http://localhost:5000
 
 ## Future Features
 
-1. Multiple Habit Integration: After the first one is considered "established", expand to track more habits for the user
-2. Social Sharing: Share monthly habit progress, streaks, etc. to add more "excitement" to the process
-3. Mobile App: To make the app more accessible
-4. Friends: To increase motivation and engagement, let users add friends and see friend progress
+1. **Multiple Habit Integration:** After the first one is considered "established", expand to track more habits for the user
+2. **Social Sharing:** Share monthly habit progress, streaks, etc. to add more "excitement" to the process
+3. **Mobile App:** To make the app more accessible
+4. **Friends:** To increase motivation and engagement, let users add friends and see friend progress
