@@ -73,3 +73,10 @@ VITE_API_URL=http://localhost:5000
 - One habit per user, as most habit apps fail because they let you add too much at once.
 - The AI never mentions willpower or motivation, only environment and schedule changes.
 - Habit redesigns are tracked in a `redesigns` table so you can see how the habit evolved over time.
+
+## Future Features
+
+1. **Multiple Habit Integration:** After the first one is considered "established", expand to track more habits for the user
+2. **Social Sharing:** Share monthly habit progress, streaks, etc. to add more "excitement" to the process
+3. **Mobile App:** To make the app more accessible
+4. **Friends:** To increase motivation and engagement, let users add friends and see friend progress
