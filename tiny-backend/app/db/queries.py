@@ -121,31 +121,19 @@ def get_checkins(user_id: str, limit: int = 30):
     return [dict(r) for r in rows]
 
 
-def get_streak(user_id: str, today: str = None) -> int:
-    """Count consecutive completed days ending today (or yesterday).
+def calculate_streak(checkin_map: dict, today_str: str) -> int:
+    """Pure streak calculation — no DB access.
 
-    today: YYYY-MM-DD string in the user's local timezone. Falls back to
-    the server's UTC date if not provided.
+    checkin_map: {date_str: completed_int} e.g. {'2024-01-01': 1}
+    today_str:   YYYY-MM-DD string representing the user's local date
+    Returns the number of consecutive completed days ending today or yesterday.
     """
     from datetime import date, timedelta
-    conn = get_db()
-    cursor = get_cursor(conn)
-    cursor.execute(
-        """SELECT date, completed FROM checkins
-           WHERE user_id = %s ORDER BY date DESC LIMIT 60""",
-        (user_id,)
-    )
-    rows = cursor.fetchall()
-    cursor.close()
-    conn.close()
 
-    if not rows:
+    if not checkin_map:
         return 0
 
-    checkin_map = {r['date']: r['completed'] for r in rows}
-    today_str = today or date.today().isoformat()
     today_date = date.fromisoformat(today_str)
-
     cursor_date = today_date if today_str in checkin_map else today_date - timedelta(days=1)
 
     streak = 0
@@ -159,6 +147,29 @@ def get_streak(user_id: str, today: str = None) -> int:
         cursor_date -= timedelta(days=1)
 
     return streak
+
+
+def get_streak(user_id: str, today: str = None) -> int:
+    """Count consecutive completed days ending today (or yesterday).
+
+    today: YYYY-MM-DD string in the user's local timezone. Falls back to
+    the server's UTC date if not provided.
+    """
+    from datetime import date
+    conn = get_db()
+    cursor = get_cursor(conn)
+    cursor.execute(
+        """SELECT date, completed FROM checkins
+           WHERE user_id = %s ORDER BY date DESC LIMIT 60""",
+        (user_id,)
+    )
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    checkin_map = {r['date']: r['completed'] for r in rows}
+    today_str = today or date.today().isoformat()
+    return calculate_streak(checkin_map, today_str)
 
 
 # REDESIGN
@@ -217,8 +228,7 @@ def get_stats(user_id: str) -> dict:
     )
     rows = cursor.fetchall()
     completed_count = sum(1 for r in rows if r['completed'] == 1)
-    checked_in_count = len(rows)
-    completion_rate = completed_count / checked_in_count if checked_in_count > 0 else 0
+    completion_rate = completed_count / days_in_range if days_in_range > 0 else 0
 
     cursor.execute(
         "SELECT id FROM habits WHERE user_id = %s ORDER BY created_at DESC LIMIT 1",

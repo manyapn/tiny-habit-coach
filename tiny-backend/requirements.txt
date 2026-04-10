@@ -5,3 +5,4 @@ anthropic>=0.40.0
 gunicorn>=21.2.0
 psycopg2-binary>=2.9.9
 PyJWT[crypto]>=2.8.0
+pytest>=8.0.0
